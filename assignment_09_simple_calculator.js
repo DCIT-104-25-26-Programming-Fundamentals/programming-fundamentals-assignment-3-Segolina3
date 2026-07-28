@@ -74,4 +74,82 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readlineSync = require('readline-sync');
 
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    return a / b;
+}
+
+function modulusOp(a, b) {
+    return a % b;
+}
+
+function exponent(a, b) {
+    return a ** b;
+}
+
+function showMenu() {
+    console.log("============================");
+    console.log("     SIMPLE CALCULATOR");
+    console.log("============================");
+    console.log("1. Addition");
+    console.log("2. Subtraction");
+    console.log("3. Multiplication");
+    console.log("4. Division");
+    console.log("5. Modulus");
+    console.log("6. Exponentiation");
+    console.log("7. Quit");
+}
+
+function main() {
+    const operations = {
+        "1": ["+", add],
+        "2": ["-", subtract],
+        "3": ["*", multiply],
+        "4": ["/", divide],
+        "5": ["%", modulusOp],
+        "6": ["**", exponent],
+    };
+
+    while (true) {
+        showMenu();
+        const choice = readlineSync.question("Select an operation (1-7): ");
+
+        if (choice === "7") {
+            console.log("Goodbye!");
+            break;
+        }
+
+        if (!(choice in operations)) {
+            console.log("Error: Invalid choice. Please enter 1-7.");
+            continue;
+        }
+
+        const num1 = readlineSync.questionFloat("Enter first number : ");
+        const num2 = readlineSync.questionFloat("Enter second number: ");
+
+        if ((choice === "4" || choice === "5") && num2 === 0) {
+            console.log("Error: Cannot divide by zero.");
+            continue;
+        }
+
+        const [symbol, func] = operations[choice];
+        const result = func(num1, num2);
+
+        console.log(`Result: ${num1} ${symbol} ${num2} = ${result.toFixed(2)}`);
+    }
+}
+
+main();
